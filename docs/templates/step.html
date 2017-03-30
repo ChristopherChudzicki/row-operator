@@ -1,0 +1,17 @@
+<div class="step" id="{{'step'+step.id}}">
+  <div class="row">
+    <div class="col-md-4">
+      <div ng-repeat="name in step.rowNames">
+        <input type="text" ng-model="step.transformation[name]">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="matrix-holder" id='matrix-holder-{{step.id}}'></div>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-default" ng-click="addStep()">Add Step</button>
+    </div>
+  </div>
+</div>
+
+{{initializeKatexForStep(step)}}
