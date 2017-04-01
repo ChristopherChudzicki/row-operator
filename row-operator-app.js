@@ -20,8 +20,6 @@ app.controller('reducCtrl', ['$scope', function($scope){
     $scope.steps = [];
     $scope.updateInitialMatrix(); //initialize
     $scope.addStep();
-    
-    
 
     function addStep(){
         var previousStepIdx = $scope.steps.length - 1;
