@@ -11,6 +11,8 @@ app.controller('reducCtrl', ['$scope', function($scope){
         steps:[]
     }
     
+    scope = $scope;
+    
     $scope.updateInitialMatrix = updateInitialMatrix;
     $scope.addStep = addStep;
     $scope.initializeKatexForStep = initializeKatexForStep;
@@ -19,7 +21,7 @@ app.controller('reducCtrl', ['$scope', function($scope){
     $scope.updateInitialMatrix(); //initialize
     $scope.addStep();
     
-    scope = $scope;
+    
 
     function addStep(){
         var previousStepIdx = $scope.steps.length - 1;

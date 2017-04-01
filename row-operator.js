@@ -364,15 +364,16 @@ newRationalMatrix = function(matrix){
 
 class RowReductionStep  {
     constructor (el, oldMatrix) {
+        this._holdUpdates = true;
+        
+        this.id = _.uniqueId();
         this.firstRowIndex = 1;
         this.lastRowIndex = this.firstRowIndex + oldMatrix.size()[0];
         this.rowNames = this.getRowNames();
         
         this.el = el;
-        this.id = _.uniqueId();
         
         //Set Matrices
-        this._holdUpdates = true;
         Object.defineProperties(this, {
             oldMatrix: {
                 set: function(val){
@@ -393,8 +394,6 @@ class RowReductionStep  {
         this._holdUpdates = false;
         this.updateDisplay();
     }
-    
-    
     
     updateTransformation() {
         var _this = this;  
@@ -514,3 +513,25 @@ class RowReductionStep  {
         }
     }
 }
+
+// TODO: factor RowReductionStep.updateTransformation into classes below. 
+// Some Issues:
+// only allow valid row operations
+// check that collection of row operations is not singular (e.g., r1->r2, r2->r2 would be singular).
+
+class RowTransformation {
+    //Represents a collection of row operations
+    constructor(arrayOfTransformations){
+    }
+}
+
+class RowOperation {
+    // Represents a single row operation, e.g.
+    // RowOperation('r1', 'r1-r2+2r4')
+    constructor(row, transformedRow) {
+    }
+    
+    // Check with transformedRow is actually a valid row operation. E.g., mathjs will parse 2r2+3 perfectly fine, but adding 3 to all elements of a row is not a valid row operation.
+    isValidTranformation(){
+    }
+}   
