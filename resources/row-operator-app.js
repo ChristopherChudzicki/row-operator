@@ -1,7 +1,6 @@
 app = angular.module('rowOpApp', ['ngAnimate', 'ui.bootstrap']);
 
-app.controller('reducCtrl', ['$scope', function($scope){
-    $scope.settings = {
+initialSettings = {
         initialMatrix: `[
             [2,0,2,-1,-10],
             [-4,0,1,2,0],
@@ -10,6 +9,9 @@ app.controller('reducCtrl', ['$scope', function($scope){
         ]`,
         steps:[]
     }
+
+app.controller('reducCtrl', ['$scope', function($scope){
+    $scope.settings = initialSettings
     
     scope = $scope;
     

@@ -9,7 +9,7 @@
       <div class="matrix-holder" id='matrix-holder-{{step.id}}'></div>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-default" ng-click="addStep()">Add Step</button>
+      <button ng-if="step.nextStep===null" class="btn btn-default" ng-click="addStep()">Add Step</button>
     </div>
   </div>
 </div>
