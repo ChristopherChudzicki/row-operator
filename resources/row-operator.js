@@ -37,14 +37,14 @@ newRationalMatrix = function(matrix){
 class RowReductionStep  {
     constructor (el, oldMatrix) {
         this._holdUpdates = true;
-        
+
         this.id = _.uniqueId();
         this.firstRowIndex = 1;
         this.lastRowIndex = this.firstRowIndex + oldMatrix.size()[0];
         this.rowNames = this.getRowNames();
-        
+
         this.el = el;
-        
+
         //Set Matrices
         Object.defineProperties(this, {
             oldMatrix: {
@@ -60,15 +60,15 @@ class RowReductionStep  {
         this.oldMatrix = oldMatrix;
         this.transformation = {};
         this.transformation = this.updateTransformation();
-        this.matrix = this.calcMatrix();   
+        this.matrix = this.calcMatrix();
         this.nextStep = null;
-        
+
         this._holdUpdates = false;
         this.updateDisplay();
     }
-    
+
     updateTransformation() {
-        var _this = this;  
+        var _this = this;
         // Loop over rows in our transformation. Remove any that are not in our matrix.
         for (let _key in this.transformation){
             var key = _key.substring(1);
@@ -77,7 +77,7 @@ class RowReductionStep  {
                 delete this.transformation[_key];
             }
         }
-        
+
         // Loop over all rows in our matrix
         for (let j = 0; j<this.rowNames.length; j++){
             let key = this.rowNames[j];
@@ -96,10 +96,10 @@ class RowReductionStep  {
             })
             this.transformation[key] = key;
         }
-        
+
         return this.transformation;
     }
-    
+
     getRowScope(matrix){
         // returns an object {r1:row1, r2:row2, ... } where the rows are rows of this.matrix
         var rowScope = {};
@@ -109,7 +109,7 @@ class RowReductionStep  {
         }
         return rowScope;
     }
-    
+
     getRowNames(){
         var rowNames = [];
         for (let j=this.firstRowIndex; j<this.lastRowIndex; j++){
@@ -117,7 +117,7 @@ class RowReductionStep  {
         }
         return rowNames;
     }
-    
+
     rowTransform(transformation){
         // Transformation should be an such as
         // {
@@ -133,22 +133,22 @@ class RowReductionStep  {
             if (newRow === undefined) { newRow = key};
             newRowList.push(newRow);
         }
-        
+
         var oldRowScope = this.getRowScope(this.oldMatrix);
         // Given an array [str0, str1, ...], math.parse returns an array of parse trees.
         var newRows = []
-        var nodeTree = math.parse(newRowList).forEach( function(node){ 
+        var nodeTree = math.parse(newRowList).forEach( function(node){
             newRows.push( node.eval(oldRowScope) );
          } );
-         
+
          return newRationalMatrix(newRows);
-        
+
     }
-    
+
     calcMatrix(){
         return this.rowTransform(this.transformation);
     }
-    
+
     static toTex(matrix){
         var noFakeFractions = matrix.map( function(value, idx, matrix){
             if (value.d === 1){
@@ -158,25 +158,25 @@ class RowReductionStep  {
                 return value;
             }
         } )
-        
+
         var latex = math.parse(String(noFakeFractions)).toTex();
         latex = Utility.replaceAll(latex, '\\\\\\end', '\\end')
 
         return latex
-        
+
     }
-    
+
     updateDisplay(){
         katex.render(RowReductionStep.toTex(this.matrix), this.el);
     }
-    
+
     onChange(){
         if (!this._holdUpdates){
             this.firstRowIndex = 1;
             this.lastRowIndex = this.firstRowIndex + this.oldMatrix.size()[0];
             this.rowNames = this.getRowNames();
             this.updateTransformation();
-            
+
             this.matrix = this.calcMatrix();
             this.updateDisplay();
         }
@@ -186,7 +186,7 @@ class RowReductionStep  {
     }
 }
 
-// TODO: factor RowReductionStep.updateTransformation into classes below. 
+// TODO: factor RowReductionStep.updateTransformation into classes below.
 // Some Issues:
 // only allow valid row operations
 // check that collection of row operations is not singular (e.g., r1->r2, r2->r2 would be singular).
@@ -202,8 +202,8 @@ class RowOperation {
     // RowOperation('r1', 'r1-r2+2r4')
     constructor(row, transformedRow) {
     }
-    
+
     // Check with transformedRow is actually a valid row operation. E.g., mathjs will parse 2r2+3 perfectly fine, but adding 3 to all elements of a row is not a valid row operation.
     isValidTranformation(){
     }
-}   
+}
