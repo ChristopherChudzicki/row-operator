@@ -1,5 +1,7 @@
 'use strict';
 
+// This was copied from an early version of math3d and problably contains a bunch of stuff that is unnecessary for this app.
+
 class Utility {
     static defaultVal(variable, defaultVal) {
         return typeof variable !== 'undefined' ? variable : defaultVal;
@@ -15,7 +17,7 @@ class Utility {
     }
 
     static isPureObject(arg) {
-        // Test if something is an object. 
+        // Test if something is an object.
         // OK, [1,2,3] is an object in JS. I mean test if something is an object like {a:1,b:[1,2,3],c:{aa:5}}.
         return arg !== null && typeof arg === 'object' && !Array.isArray(arg)
     }
@@ -284,7 +286,7 @@ class Utility {
             throw message; // Fallback
         }
     }
-    
+
     static extendSetter(obj, prop, afterSet){
         // Original property must be configurable, which is not default
         // afterSet(val) ... val is value passed to original setter
@@ -307,7 +309,7 @@ class Utility {
             }
         })
     }
-    
+
     //http://stackoverflow.com/a/1144788/2747370
     static escapeRegExp(str) {
         return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
@@ -315,7 +317,7 @@ class Utility {
     static replaceAll(str, find, replace) {
         return str.replace(new RegExp(Utility.escapeRegExp(find), 'g'), replace);
     }
-    
+
     static findClosingBrace(string, startIdx){
         var braces = {
             '[':']',
@@ -325,13 +327,13 @@ class Utility {
         };
         var openingBrace = string[startIdx];
         var closingBrace = braces[openingBrace];
-        
+
         if (closingBrace===undefined){
             throw `${string} does not contain an opening brace at position ${startIdx}.`
         }
-        
+
         var stack = 1;
-        
+
         for (let j=startIdx+1; j<string.length; j++){
             if (string[j] === openingBrace){
                 stack += +1;
@@ -347,6 +349,6 @@ class Utility {
         if (stack !== 0 ){
             throw `${string} has a brace that opens at position ${startIdx} but does not close.`
         }
-        
+
     }
 }
